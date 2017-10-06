@@ -1,3 +1,6 @@
+# A YouTube Search App built with React Native
+
+This app was built following these [YouTube videos](https://www.youtube.com/playlist?list=PL06z42zB6YZ_G3sjHIuv6uj9bA76c9v7V)
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
 Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
