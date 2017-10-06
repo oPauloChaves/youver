@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "YouVer",
+    "description": "A YouTube Search App built with React Native",
+    "slug": "youver",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "primaryColor": "#e62117",
+    "privacy": "public",
+    "sdkVersion": "21.0.0",
+    "android": {
+      "package": "com.chaveinx.youver",
+      "versionCode": 1,
+      "permissions": []
+    }
+  }
+}
