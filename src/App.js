@@ -1,46 +1,89 @@
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
- * @flow
  */
 
 import React, {Component} from "react"
-import {Platform, StyleSheet, Text, View} from "react-native"
+import {StyleSheet} from "react-native"
+import {Container, Content, Spinner} from "native-base"
+import YTSearch from "./utils/youtubeApi"
+import Header from "./components/Header"
+import SearchBar from "./components/SearchBar"
+import VideoList from "./components/VideoList"
 
-const instructions = Platform.select({
-  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
-  android:
-    "Double tap R on your keyboard to reload,\n" +
-    "Shake or press menu button for dev menu",
-})
+const API_KEY = "AIzaSyAxIUIxhIi6CFfJhPf9oJ2ymThrzoCQpcU"
+const DEFAULT_SEARCH = "reactjs"
 
-export default class App extends Component<{}> {
+export default class App extends Component {
+  state = {
+    term: "",
+    videos: [],
+    loading: false,
+  }
+
+  searchYouTube = term => {
+    YTSearch({q: term, key: API_KEY})
+      .then(data => {
+        let videos = []
+        if (data && data.hasOwnProperty("items")) {
+          videos = data.items
+        }
+        this.setState({videos, loading: false})
+      })
+      .catch(err => {
+        console.error(err)
+        this.setState({videos: [], loading: false})
+      })
+  }
+
+  toggleLoading = () => {
+    this.setState({
+      loading: !this.state.loading,
+    })
+  }
+
+  onSubmitSearch = () => {
+    this.toggleLoading()
+    this.searchYouTube(this.state.term)
+  }
+
+  onChangeTerm = newTerm => {
+    this.setState({
+      term: newTerm,
+    })
+  }
+
+  componentDidMount() {
+    this.toggleLoading()
+    this.searchYouTube(DEFAULT_SEARCH)
+  }
+
   render() {
+    const {videos = [], loading, term} = this.state
+
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <Container style={styles.container}>
+        <Header title="YouTube Search" />
+        <Content style={styles.content}>
+          <SearchBar
+            onPressSearch={this.onSubmitSearch}
+            onChangeTerm={this.onChangeTerm}
+            term={term}
+          />
+          {loading && <Spinner color="red" />}
+          {videos.length > 0 && <VideoList videos={videos} />}
+        </Content>
+      </Container>
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF",
+    backgroundColor: "#eee",
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: "center",
-    margin: 10,
-  },
-  instructions: {
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 5,
+  content: {
+    paddingLeft: 16,
+    paddingRight: 16,
   },
 })
