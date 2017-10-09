@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingLeft: 25,
-    justifyContent: "center",
+    paddingTop: 20,
     backgroundColor: "#fff",
   },
   drawerList: {},
