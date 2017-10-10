@@ -1,24 +1,20 @@
-import {Font, AppLoading} from "expo"
-import React from "react"
+import React, {Component} from "react"
+// import {View, Text} from "react-native"
 import App from "./src/App"
 
-export default class App1 extends React.Component {
-  state = {
-    isReady: false,
-  }
-
-  async componentWillMount() {
-    await Font.loadAsync({
-      Roboto: require("native-base/Fonts/Roboto.ttf"),
-      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-    })
-    this.setState({isReady: true})
-  }
+export default class AppRoot extends Component {
+  // state = {
+  //   isReady: false,
+  // }
 
   render() {
-    if (!this.state.isReady) {
-      return <AppLoading />
-    }
+    // if (!this.state.isReady) {
+    //   return (
+    //     <View>
+    //       <Text>Loading...</Text>
+    //     </View>
+    //   )
+    // }
     return <App />
   }
 }

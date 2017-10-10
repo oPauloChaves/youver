@@ -1,7 +1,6 @@
 import React, {Component} from "react"
 import {View, Image, StyleSheet} from "react-native"
 import {Content, Card, CardItem, Text, Icon, Button} from "native-base"
-import {WebBrowser} from "expo"
 
 const VideoItem = ({video, onPlay}) => {
   const {
@@ -32,9 +31,15 @@ const VideoItem = ({video, onPlay}) => {
 }
 
 class VideoList extends Component {
-  onPlay = videoId => {
-    const url = `https://m.youtube.com/watch?v=${videoId}`
-    WebBrowser.openBrowserAsync(url)
+  onPlay = video => {
+    console.log(this.props)
+    this.props.navigator.push({
+      screen: "youver.PlayVideo",
+      title: "Screen Play Video",
+      passProps: {
+        video,
+      },
+    })
   }
 
   render() {
@@ -44,7 +49,7 @@ class VideoList extends Component {
           <VideoItem
             key={video.id.videoId}
             video={video}
-            onPlay={event => this.onPlay(video.id.videoId)}
+            onPlay={event => this.onPlay(video)}
           />
         ))}
       </Content>
